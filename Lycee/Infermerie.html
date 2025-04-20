@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Académie Royale Militaire</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="logolycee.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+    <header class="header p-3 d-flex px-5 sticky-top ">
+        <div data-toggle="collapse" data-target="#sidebar">
+            <div id="menuList">
+                <i class="fas fa-bars"></i>
+            </div>
+            
+                    </div>
+        <h1><img src="logolycee.ico" width="50"></h1>
+        <div class="header-icon">
+            <i class="fas fa-user"></i>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    fetch("get_user_data.php")
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.error) {
+                                alert("Utilisateur non connecté");
+                                window.location.href = "index.html";
+                            } else {
+                                document.getElementById("loggedUsername").textContent = data.username;
+                                document.getElementById("loggedPassword").textContent = data.password;
+                                document.getElementById("loggedGrade").textContent = data.grade;
+                                document.getElementById("loggedFunction").textContent = data.fonction;
+                            }
+                        })
+                        .catch(error => console.error("Erreur :", error));
+                });
+            </script>
+            <div class="header-popup">
+                <h3>Login Information</h3>
+                <p>Utilisateur: <b id="loggedUsername"></b></p>
+                <p>Password: <b id="loggedPassword"></b></p>
+                <p>Grade: <b id="loggedGrade"></b></p>
+                <p>Fonction: <b id="loggedFunction"></b></p>
+                <a href="logout.php">Logout</a>
+            </div>
+        </div>
+    </header>
+    <div class="mainAndAside bg-light">
+        <aside id="sidebar" class="collapse show">
+            <nav>
+                <ul>
+                    <li><a href="Home.html"><i class="fas fa-home"></i>Accueil</a></li>
+                    <li><a href="Etudiants.html"><i class="fas fa-user-graduate"></i>Étudiants</a></li>
+                    <li><a href="Promotions.html"><i class="fas fa-layer-group"></i>Promotion</a></li>
+
+                    <li><a href="infermerie.html" class="active"><i class="fas fa-notes-medical"></i>Infermerie</a></li>
+                    <li><a href="Permissions.html"><i class="fas fa-calendar"></i>Permissions</a></li>
+                    <li><a href="Permanence.html"><i class="fas fa-moon"></i>Permanence</a></li>
+                    <!-- Add more categories as needed -->
+                </ul>
+            </nav>
+        </aside>
+        <main class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <section class="container">
+                        <h2>Infermerie</h2>
+                        <div>
+                            <h4>Consultations, Dentiste, et Soins</h4>
+                            <form>
+                                <div class="form-group">
+                                    <label for="studentName">Nom de l'élève</label>
+                                    <input type="text" class="form-control" id="studentName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="studentLevel">Niveau de l'élève</label>
+                                    <select class="form-control" id="studentLevel" required>
+                                        <option value="1/1">1/1</option>
+                                        <option value="1/2">1/2</option>
+                                        <option value="1/3">1/3</option>
+                                        <option value="1/4">1/4</option>
+                                        <option value="1/5">1/5</option>
+                                        <option value="2/1">2/1</option>
+                                        <option value="2/2">2/2</option>
+                                        <option value="2/3">2/3</option>
+                                        <option value="2/4">2/4</option>
+                                        <!-- Add more options as needed -->
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="consultationType">Type</label>
+                                    <select class="form-control" id="consultationType" required>
+                                        <option value="Consultation">Consultation</option>
+                                        <option value="Soin">Soin</option>
+                                        <option value="Dentaire">Dentiste</option>
+                                        <!-- Add more options as needed -->
+                                    </select>
+                                </div>
+                                <button class="buttons">Ajouter</button>
+                            </form>
+                        </div>
+                    </section>
+                    <section>
+                        <h2>Consultations Programmées</h2>
+                        <div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Nom de l'élève</th>
+                                        <th>Niveau</th>
+                                        <th>Type De Consultation</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="scheduledConsultationsTable">
+                                    <!-- Les consultations programmées seront ajoutées ici -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <button type="button" class="btn btn-primary buttons" data-toggle="modal"
+                            data-target="#addAppointmentModalScheduled">Ajouter un rendez-vous</button>
+                    </section>
+
+
+                </div>
+                <div class="col-md-6">
+                    <section class="mb-5">
+                        <h2>Consultations</h2>
+                        <div>
+                            <!-- Tableau des consultations -->
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Nom de l'élève</th>
+                                        <th>Classe</th>
+                                        <th>Etat</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="consultationsTable">
+                                    <!-- Les consultations seront ajoutées ici -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Modal pour ajouter un rendez-vous pour les consultations programmées -->
+                    <div class="modal fade" id="addAppointmentModalScheduled" tabindex="-1"
+                        aria-labelledby="addAppointmentModalScheduledLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addAppointmentModalScheduledLabel">Ajouter un rendez-vous
+                                        pour les consultations programmées</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="scheduledAppointmentDate">Date du rendez-vous</label>
+                                        <input type="date" class="form-control" id="scheduledAppointmentDate"
+                                            required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="scheduledStudentNameModal">Nom de l'élève</label>
+                                        <input type="text" class="form-control" id="scheduledStudentNameModal"
+                                            required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="scheduledStudentLevelModal">Niveau</label>
+                                        <input type="text" class="form-control" id="scheduledStudentLevelModal"
+                                            required>
+                                    </div>
+                                   
+                                    <div class="form-group">
+                                        <label for="consultationType">Type</label>
+                                        <select class="form-control" id="consultationType" required>
+                                            <option value="Consultation">Consultation</option>
+                                            <option value="Soin">Soin</option>
+                                            <option value="Dentaire">Dentiste</option>
+                                            <!-- Add more options as needed -->
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary buttons"
+                                        data-dismiss="modal">Fermer</button>
+                                    <button type="button" class="btn btn-primary buttons"
+                                        id="addScheduledAppointmentBtn">Ajouter</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <section class="mx-3 mb-5">
+                        <h2>Exceptions</h2>
+                        <div>
+                            <!-- Tableau des exceptions -->
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Nom de l'élève</th>
+                                        <th scope="col">Durée de l'exception</th>
+                                        <th scope="col">Imprimer</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="exceptionsTable">
+                                    <!-- Les exceptions seront ajoutées ici -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <button type="button" class="btn btn-primary buttons" data-toggle="modal"
+                            data-target="#addExceptionModal">Ajouter une exception</button>
+                    </section>
+
+                    <!-- Modal pour ajouter une exception -->
+                    <div class="modal fade" id="addExceptionModal" tabindex="-1" aria-labelledby="addExceptionModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addExceptionModalLabel">Ajouter une exception</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="exceptionDate">Date de l'exception</label>
+                                        <input type="date" class="form-control" id="exceptionDate" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exceptionStudentNameModal">Nom de l'élève</label>
+                                        <input type="text" class="form-control" id="exceptionStudentNameModal"
+                                            required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exceptionDuration">Durée de l'exception</label>
+                                        <input type="text" class="form-control" id="exceptionDuration" required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary buttons"
+                                        data-dismiss="modal">Fermer</button>
+                                    <button type="button" class="btn btn-primary buttons"
+                                        id="addExceptionBtn">Ajouter</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script/js.js"></script>
+    <script src="script/login.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
+        
+    <script>
+        $(document).ready(function () {
+            // Function to add a new consultation to the table
+            function addConsultation(date, studentName, level, classNumber) {
+                var newRow = `
+                <tr>
+                    <td>${date}</td>
+                    <td>${studentName}</td>
+                    <td>${level}</td>
+                    <td>${classNumber}</td>
+                    <td><button class="btn btn-primary buttons" onclick="printPDF('${date}', '${studentName}', '${classNumber}')">Imprimer</button></td>
+                </tr>
+            `;
+                $("#consultationsTable").append(newRow);
+            }
+    
+            // Function to add a new appointment for scheduled consultations
+            $("#addScheduledAppointmentBtn").click(function () {
+                var appointmentDate = $("#scheduledAppointmentDate").val();
+                var studentName = $("#scheduledStudentNameModal").val();
+                var studentLevel = $("#scheduledStudentLevelModal").val();
+                var studentClass = $("#scheduledStudentClassModal").val();
+                addConsultation(appointmentDate, studentName, studentLevel, studentClass);
+                $("#addAppointmentModalScheduled").modal("hide");
+            });
+    
+            // Function to print the PDF
+            function printPDF(date, studentName, classNumber) {
+                // Fetch the PDF template
+                var pdfUrl = 'http://localhost/Lycee/template.pdf'; // Update the path to match your server path
+                var pdfName = 'Consultation.pdf';
+    
+                PDFJS.getDocument(pdfUrl).promise.then(function(pdf) {
+                    pdf.getPage(1).then(function(page) {
+                        var scale = 1.5;
+                        var viewport = page.getViewport({ scale: scale });
+    
+                        // Prepare canvas using PDF page dimensions
+                        var canvas = document.createElement('canvas');
+                        var context = canvas.getContext('2d');
+                        canvas.height = viewport.height;
+                        canvas.width = viewport.width;
+    
+                        // Render PDF page into canvas context
+                        var renderContext = {
+                            canvasContext: context,
+                            viewport: viewport
+                        };
+                        page.render(renderContext).promise.then(function() {
+                            var pdfData = canvas.toDataURL();
+                            var pdfWidth = canvas.width;
+                            var pdfHeight = canvas.height;
+    
+                            var docDefinition = {
+                                content: [{
+                                    image: pdfData,
+                                    width: pdfWidth,
+                                    height: pdfHeight
+                                }]
+                            };
+    
+                            pdfMake.createPdf(docDefinition).download(pdfName);
+                        });
+                    });
+                });
+            }
+    
+            // Function to add a new exception to the table
+            function addException(date, studentName, duration, colonelSignature) {
+                var newRow = `
+                <tr>
+                    <td>${date}</td>
+                    <td>${studentName}</td>
+                    <td>${duration}</td>
+                    <td>${colonelSignature}</td>
+                </tr>
+            `;
+                $("#exceptionsTable").append(newRow);
+            }
+    
+            // Function to add a new exception
+            $("#addExceptionBtn").click(function () {
+                var exceptionDate = $("#exceptionDate").val();
+                var exceptionStudentName = $("#exceptionStudentNameModal").val();
+                var exceptionDuration = $("#exceptionDuration").val();
+                var exceptionColonelSignature = $("#exceptionColonelSignature").val();
+                addException(exceptionDate, exceptionStudentName, exceptionDuration, exceptionColonelSignature);
+                $("#addExceptionModal").modal("hide");
+            });
+    
+            // Example exception data
+            var exceptionData = [
+                { date: "2024-04-15", studentName: "John Doe", duration: "1 day", colonelSignature: "Colonel Smith" },
+                { date: "2024-04-16", studentName: "Jane Doe", duration: "2 days", colonelSignature: "Colonel Brown" },
+                // Add more exception data here
+            ];
+    
+            // Add exceptions to the table
+            exceptionData.forEach(function (exception) {
+                addException(exception.date, exception.studentName, exception.duration, exception.colonelSignature);
+            });
+        });
+    </script>
+    
+    
+</body></html>

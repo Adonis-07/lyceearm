@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Académie Royale Militaire</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="logolycee.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+</head>
+
+<body>
+    <header class="header p-3 d-flex px-5 sticky-top">
+        <div data-toggle="collapse" data-target="#sidebar">
+            <div id="menuList">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+        <h1><img src="logolycee.ico" width="50"></h1>
+        <div class="header-icon">
+            <i class="fas fa-user"></i>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    fetch("get_user_data.php")
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.error) {
+                                alert("Utilisateur non connecté");
+                                window.location.href = "index.html";
+                            } else {
+                                document.getElementById("loggedUsername").textContent = data.username;
+                                document.getElementById("loggedPassword").textContent = data.password;
+                                document.getElementById("loggedGrade").textContent = data.grade;
+                                document.getElementById("loggedFunction").textContent = data.fonction;
+                            }
+                        })
+                        .catch(error => console.error("Erreur :", error));
+                });
+            </script>
+        </head>
+        <body>
+            <div class="header-popup">
+                <h3>Login Information</h3>
+                <p>Utilisateur: <b id="loggedUsername"></b></p>
+                <p>Password: <b id="loggedPassword"></b></p>
+                <p>Grade: <b id="loggedGrade"></b></p>
+                <p>Fonction: <b id="loggedFunction"></b></p>
+                <a href="logout.php">Logout</a>
+            </div>
+        </div>
+    </header>
+    <div class="mainAndAside bg-light">
+        <aside id="sidebar" class="collapse show">
+            <nav>
+                <ul>
+                    <li><a href="Home.html" class="active"><i class="fas fa-home"></i>Accueil</a></li>
+                    <li><a href="Etudiants.html"><i class="fas fa-user-graduate"></i>Étudiants</a></li>
+                    <li><a href="Promotions.html"><i class="fas fa-layer-group"></i>Promotion</a></li>
+                    <li><a href="Infermerie.html"><i class="fas fa-notes-medical"></i>Infermerie</a></li>
+                    <li><a href="Permissions.html"><i class="fas fa-calendar"></i>Permissions</a></li>
+                    <li><a href="Permanence.html"><i class="fas fa-moon"></i>Permanence</a></li>
+                    <li><a href="settings.html"><i class="fas fa-circle-notch"></i>Parametres</a></li>
+                    <!-- Add more categories as needed -->
+                </ul>
+            </nav>
+        </aside>
+        <main>
+            <div class="container" style="display: flex; flex-wrap: wrap;">
+                <!-- Étudiants Container -->
+                <div class="students-container p-4"  style="min-width: max-content; flex: 1;">
+                    <h2>Étudiants</h2>
+                    <div class="d-flex justify-content-around mt-4" style="font-size: 1.2rem;">
+                        <b>Total: </b><p class="studentCount" id="totalStudents">180</p>
+                    </div>
+                    <hr style="width: 100%;">
+
+                    <div class="niveaux d-flex justify-content-around">
+                        <div class="er-annee">
+                            <p>1 Année</p>
+                            <h3><span id="nombreEleve1Anne" class="studentCount">91</span></h3>
+                        </div>
+
+                        <div class="me-annee">
+                            <p>2 Année</p>
+                            <h3><span id="nombreEleve2Anne" class="studentCount">89</span></h3>
+                        </div>
+                    </div>
+                    <hr style="width: 100%;">
+
+                    <div class="d-flex justify-content-around">
+                        <b>Absents: </b><p class="studentCount" id="absentStudents">10</p>
+                    </div>
+                    <button type="button" class="buttons" onclick="location.href='Etudiants.html'">Voir les Étudiants</button>
+                </div>
+                <!-- Promotions Container -->
+                <div class="chart-container p-5 " style="width: max-content; flex: 1;">
+                    <h2>Promotions</h2>
+                    <div id="promotionCarousel" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active everyCarrousel">
+                                <p><span style="font-size: 2.2em;">2023-2024</span></p>
+                                <p>103</p>
+
+                            </div>
+                            <div class="carousel-item everyCarrousel">
+                                <p><span style="font-size: 2.2em;">2022-2023</span></p>
+                                <p>102</p>
+
+                            </div>
+                            <div class="carousel-item everyCarrousel">
+                                <p><span style="font-size: 2.2em;">2021-2022</span></p>
+                                <p>101</p>
+                            </div>
+                            <!-- Add more promotions as needed -->
+                        </div>
+                        <a class="carousel-control-prev" href="#promotionCarousel" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#promotionCarousel" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                    <button type="button" class="buttons" onclick="location.href='Promotions.html'">Voir les Promotions</button>
+                </div>
+                <!-- Infermerie Container -->
+                <div class="calendar-con p-3 w-100" style="text-align: center; min-width: max-content; flex: 12;">
+                    <h1>Infermerie</h1>
+                    <table class="table align-items-center">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nom</th>
+                                <th scope="col">Niveau</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><small>Mohamed EZ-ZAROUALY</small></td>
+                                <td><small>2 Bac</small></td>
+                                <td><small>3 juillet 2025</small></td>
+                                <td><small>Hospital</small></td>
+                                <td><div class="checkbox-container align-items-center justify-content-center">
+                                    <input type="checkbox" id="EZZAROUALY-Inf-cons">
+                                    <label for="EZZAROUALY-Inf-cons" class="checkbox-icon">
+                                        <i class="fas fa-check"></i>
+                                    </label>
+                                </div></td>
+                            </tr>
+                            <tr>
+                                <td><small>Mohamed EZ-ZAROUALY</small></td>
+                                <td><small>2 Bac</small></td>
+                                <td><small>5 Janvier 2025</small></td>
+                                <td><small>Soin</small></td>
+                                <td><div class="checkbox-container align-items-center justify-content-center">
+                                    <input type="checkbox" class="checkboxElement" id="EZZAROUALY-Inf-Soin">
+                                    <label for="EZZAROUALY-Inf-Soin" class="checkbox-icon">
+                                        <i class="fas fa-check"></i>
+                                    </label>
+                                </div></td>
+                            </tr><tr>
+                                <td><small>Mohamed EZ-ZAROUALY</small></td>
+                                <td><small>2 Bac</small></td>
+                                <td><small>3 Mars 2025</small></td>
+                                <td><small>Dentaire</small></td>
+                                <td><div class="checkbox-container align-items-center justify-content-center">
+                                    <input type="checkbox" id="EZZAROUALY-Inf-Dent">
+                                    <label for="EZZAROUALY-Inf-Dent" class="checkbox-icon">
+                                        <i class="fas fa-check"></i>
+                                    </label>
+                                </div></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button type="button" class="buttons mt-4" onclick="location.href='Infermerie.html'">Voir l'Infermerie</button>
+                </div>
+            </div>
+                <div class="container" style="display: flex; flex-wrap: wrap;">
+
+                <div class="announcements p-4" style="min-width: min-content; flex:0; text-align: center;">
+                    <h2 style="font-size: 2.5rem;">Permissions</h2>
+                    <div class="permission-details">
+                        <div class="permission-info">
+                            <p><strong>Date de début:</strong> 5 juillet 2024</p>
+                            <p><strong>Date de fin:</strong> 6 juillet 2024</p>
+                            <p><strong>Durée:</strong> 24 heures</p>
+                            <hr>
+                            <p><strong>Sanctions</strong> 12</p>
+
+                        </div>
+                        <div class="permission-actions">
+                            <button type="button" class="buttons mt-4" onclick="location.href='Permissions.html'">Voir les Permissions</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="calendar-con w-100 p-3" style="text-align: center; flex: 6;">
+                    <h2 style=" margin-bottom: 40px;">Permanence</h2>
+                    <div class="d-flex justify-content-around my-4" style="flex-wrap: wrap;">
+                        <div class="flexPermissionInputs" style="flex: 4;">
+                            <label for="permanencestart">De
+                            </label>
+                            <input type="datetime-local" disabled name="permanencestart" id="permanencestart">
+                        </div>
+                        <div class="flexPermissionInputs" style="flex: 1;">
+                            <label for="permanenceend">Jusqu'a
+                            </label>
+                            <input type="datetime-local" disabled name="permanenceend" id="permanenceend">
+                        </div>
+                       </div>
+                    <p>Officier de permanence: <strong id="officerOnDuty">L. ...........</strong></p>
+                    <p>Sous-officier de permanence: <strong id="subOfficerOnDuty">Adj.Chef ..........</strong></p>
+                    <button type="button" class="buttons" onclick="location.href='Permanence.html'">Voir le programme Permanence</button>
+                </div>
+            </div>
+            </div>
+
+        </main>
+    </div>
+</body>
+<script>
+      $(document).ready(function() {
+            $('#sidebar').on('show.bs.collapse', function () {
+                if ($(window).width() < 768) {
+                    $('#sidebar').collapse('hide');
+                }
+            });
+
+            $('#sidebar a').on('click', function() {
+                if ($(window).width() < 768) {
+                    $('#sidebar').collapse('hide');
+                }
+            });
+        });
+</script>
+<script src="script/js.js"></script>
+</html>

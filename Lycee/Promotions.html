@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Académie Royale Militaire</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="script/chart.js"></script>
+    <link rel="shortcut icon" href="logolycee.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<body>
+    <header class="header p-3 d-flex px-5 sticky-top ">
+        <div data-toggle="collapse" data-target="#sidebar">
+            <div id="menuList">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+        <h1><img src="logolycee.ico" width="50"></h1>
+        <div class="header-icon">
+            <i class="fas fa-user"></i>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    fetch("get_user_data.php")
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.error) {
+                                alert("Utilisateur non connecté");
+                                window.location.href = "index.html";
+                            } else {
+                                document.getElementById("loggedUsername").textContent = data.username;
+                                document.getElementById("loggedPassword").textContent = data.password;
+                                document.getElementById("loggedGrade").textContent = data.grade;
+                                document.getElementById("loggedFunction").textContent = data.fonction;
+                            }
+                        })
+                        .catch(error => console.error("Erreur :", error));
+                });
+            </script>
+            <div class="header-popup">
+                <h3>Login Information</h3>
+                <p>Utilisateur: <b id="loggedUsername"></b></p>
+                <p>Password: <b id="loggedPassword"></b></p>
+                <p>Grade: <b id="loggedGrade"></b></p>
+                <p>Fonction: <b id="loggedFunction"></b></p>
+                <a href="logout.php">Logout</a>
+            </div>
+        </div>
+        </div>
+    </header>
+    <div class="mainAndAside bg-light">
+        <aside id="sidebar" class="collapse show">
+            <nav>
+                <ul>
+                    <li><a href="Home.html"><i class="fas fa-home"></i>Accueil</a></li>
+                    <li><a href="Etudiants.html"><i class="fas fa-user-graduate"></i>Étudiants</a></li>
+                    <li><a href="Promotions.html" class="active"><i class="fas fa-layer-group"></i>Promotion</a></li>
+                    <li><a href="infermerie.html"><i class="fas fa-notes-medical"></i>Infermerie</a></li>
+                    <li><a href="Permissions.html"><i class="fas fa-calendar"></i>Permissions</a></li>
+                    <li><a href="Permanence.html"><i class="fas fa-moon"></i>Permanence</a></li>
+                    <!-- Add more categories as needed -->
+                </ul>
+            </nav>
+        </aside>
+        <main>
+            <section class="container">
+                <h1 class="mb-4">Gestion des Promotions</h1>
+                <div class="d-flex flex-wrap justify-content-around">
+                    <div class="card p-3 m-2" style="flex: 1; min-width: 300px;">
+                        <h2 class="card-title">Ajouter une Nouvelle Promotion</h2>
+                        <form id="addPromotionForm">
+                            <div class="form-group">
+                                <label for="promotionTitle">Nombre de la Promotion</label>
+                                <input type="text" class="form-control" id="promotionTitle" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="promotionExpiry">Jusqu a</label>
+                                <input type="month" class="form-control" id="promotionExpiry" required>
+                            </div>
+                            <button type="submit" class="btn buttons">Ajouter Promotion</button>
+                        </form>
+                    </div>
+
+
+                    <!-- Section for Current Promotions -->
+                    <div class="card p-3 m-2" style="flex: 1; min-width: 300px;">
+                        <h2 class="card-title">Promotions Actuelles</h2>
+                        <div class="list-group">
+                            <!-- Example promotion item -->
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">P. 104</h5>
+                                    <small>1BAC</small>
+                                </div>
+                                <p class="mb-1">Nombres des Eleves</p>
+                                <small>89</small>
+                                <div>                                <button class="btn buttonsSecondary btn-sm mt-2" data-toggle="modal" data-target="#editPromotionModal">Modifier</button>
+                                </div>
+
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">P. 103</h5>
+                                    <small>2BAC</small>
+                                </div>
+                                <p class="mb-1">Nombres des Eleves</p>
+                                <small>89</small>
+                                <div>                                <button class="btn buttonsSecondary btn-sm mt-2" data-toggle="modal" data-target="#editPromotionModal">Modifier</button>
+                                </div>
+                            </a>                        </div>
+                    </div>
+
+                           
+
+                    <!-- Section for Old Promotions -->
+                    <div class="card p-3 m-2" style="flex: 1; min-width: 300px;">
+                        <h2 class="card-title">Promotions Anciennes</h2>
+                        <div class="list-group">
+                            <!-- Example old promotion item -->
+                            <a href="#" class="list-group-item list-group-item-action old-promotion-item" data-toggle="modal" data-target="#viewOldPromotionModal">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">Promotion 1</h5>
+                                    <small>Expiré le : 2023-12-31</small>
+                                </div>
+                                <p class="mb-1">Détails de la Promotion 1.</p>
+                                <small>Infos supplémentaires.</small>
+                            </a>
+                            <!-- Add more old promotion items as needed -->
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Modal for Viewing Old Promotion Details -->
+                <div class="modal fade" id="viewOldPromotionModal" tabindex="-1" role="dialog" aria-labelledby="viewOldPromotionModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="viewOldPromotionModalLabel">Détails de la Promotion Ancienne</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" id="oldPromotionDetails">
+                                <!-- Old promotion details will be dynamically inserted here -->
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" onclick="printOldPromotionDetails()">Imprimer</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+    </div>
+    
+    <script>
+        // Handle form submissions
+        $('#addPromotionForm').on('submit', function(event) {
+            event.preventDefault();
+            // Handle the new promotion addition logic here
+        });
+
+        $('#editPromotionForm').on('submit', function(event) {
+            event.preventDefault();
+            // Handle the promotion edit logic here
+        });
+
+        // Show old promotion details in modal
+        $('.old-promotion-item').on('click', function() {
+            var detailsHtml = $(this).html();
+            $('#oldPromotionDetails').html(detailsHtml);
+            $('#viewOldPromotionModal').modal('show');
+        });
+
+        // Print old promotion details
+        function printOldPromotionDetails() {
+            var printContents = document.getElementById('oldPromotionDetails').innerHTML;
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+        }
+    </script>
+</body>
+<script src="script/js.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+</html>

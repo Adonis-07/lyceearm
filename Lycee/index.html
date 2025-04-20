@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel="stylesheet" href="login.css">
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="shortcut icon" href="logolycee.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+<body>
+  
+<div class="scroll-down">
+  <img src="logolycee.ico" width="100" class="mb-5"  alt="logo" srcset="">
+
+<p>  Academie Royal Militaire
+</p></div>
+<div class="container"></div>
+<div class="modal">
+  <div class="modal-container">
+    <div class="modal-left">
+      <h1 class="modal-title">Bienvenue</h1>
+      <p class="modal-desc">Bienvenue sur le portail du gestion lycée de l'Academie Royal Militaire. Connectez-vous pour accéder à votre compte.</p>
+      <form action="login.php" id="loginForm" method="POST">
+        <div class="input-block">
+          <label for="username" class="input-label">Username</label>
+          <input type="username" name="username" id="username" placeholder="Username">
+        </div>
+        <div class="input-block">
+          <label for="password" class="input-label">Mot de passe</label>
+          <input type="password" name="password" id="password" placeholder="Mot de passe">
+        </div>
+      <div class="modal-buttons">
+        <button class="input-button">Connexion</button>
+      </div>
+    </form>
+    </div>
+    <div class="modal-right">
+      <img src="img.jpeg" alt="">
+    </div>
+    <button class="icon-button close-button">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+        <path d="M 25 3 C 12.86158 3 3 12.86158 3 25 C 3 37.13842 12.86158 47 25 47 C 37.13842 47 47 37.13842 47 25 C 47 12.86158 37.13842 3 25 3 z M 25 5 C 36.05754 5 45 13.94246 45 25 C 45 36.05754 36.05754 45 25 45 C 13.94246 45 5 36.05754 5 25 C 5 13.94246 13.94246 5 25 5 z M 16.990234 15.990234 A 1.0001 1.0001 0 0 0 16.292969 17.707031 L 23.585938 25 L 16.292969 32.292969 A 1.0001 1.0001 0 1 0 17.707031 33.707031 L 25 26.414062 L 32.292969 33.707031 A 1.0001 1.0001 0 1 0 33.707031 32.292969 L 26.414062 25 L 33.707031 17.707031 A 1.0001 1.0001 0 0 0 32.980469 15.990234 A 1.0001 1.0001 0 0 0 32.292969 16.292969 L 25 23.585938 L 17.707031 16.292969 A 1.0001 1.0001 0 0 0 16.990234 15.990234 z"/>
+      </svg>
+    </button>
+  </div>
+  <button class="modal-button">Cliquez ici pour vous connecter</button>
+</div>
+<!-- partial -->
+<script  src="login.js"></script>
+</body>
+</html>

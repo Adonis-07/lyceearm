@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Académie Royale Militaire</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="shortcut icon" href="logolycee.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+  <header class="header p-3 d-flex px-5 sticky-top ">
+      <div data-toggle="collapse" data-target="#sidebar">
+          <div id="menuList">
+              <i class="fas fa-bars"></i>
+          </div>
+          
+                  </div>
+      <h1><img src="logolycee.ico" width="50"></h1>
+      <div class="header-icon">
+          <i class="fas fa-user"></i>
+          <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                fetch("get_user_data.php")
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            alert("Utilisateur non connecté");
+                            window.location.href = "index.html";
+                        } else {
+                            document.getElementById("loggedUsername").textContent = data.username;
+                            document.getElementById("loggedPassword").textContent = data.password;
+                            document.getElementById("loggedGrade").textContent = data.grade;
+                            document.getElementById("loggedFunction").textContent = data.fonction;
+                        }
+                    })
+                    .catch(error => console.error("Erreur :", error));
+            });
+        </script>
+    </head>
+    <body>
+        <div class="header-popup">
+            <h3>Login Information</h3>
+            <p>Utilisateur: <b id="loggedUsername"></b></p>
+            <p>Password: <b id="loggedPassword"></b></p>
+            <p>Grade: <b id="loggedGrade"></b></p>
+            <p>Fonction: <b id="loggedFunction"></b></p>
+            <a href="logout.php">Logout</a>
+        </div>
+    </div>
+      </div>
+  </header>
+  <div class="mainAndAside bg-light">
+      <aside id="sidebar" class="collapse show">
+            <nav>
+                <ul>
+                    <li><a href="Home.html"><i class="fas fa-home"></i>Accueil</a></li>
+                    <li><a href="Etudiants.html" class="active"><i class="fas fa-user-graduate"></i>Étudiants</a></li>
+                    <li><a href="Promotions.html"><i class="fas fa-layer-group"></i>Promotion</a></li>
+                    <li><a href="infermerie.html"><i class="fas fa-notes-medical"></i>Infermerie</a></li>
+                    <li><a href="Permissions.html"><i class="fas fa-calendar"></i>Permissions</a></li>
+                    <li><a href="Permanence.html"><i class="fas fa-moon"></i>Permanence</a></li>
+                    <!-- Add more categories as needed -->
+                </ul>
+            </nav>
+        </aside>
+        <main>
+
+            <div class="d-flex containers " style="display: flex; flex-wrap: wrap;">
+              <section style="flex-basis: 55%; flex: 1;">
+                <div class="mt-2">
+                    <!-- Titre "Fiche de l'élève" avec une icône -->
+                    <h2><i class="fas fa-address-card"></i> Fiche de l'élève</h2>
+                    <!-- Situation des élèves et promotion -->
+                   <div class="text-left m-3">
+                    <p>Nombre des élèves : <span id="elevesNombre" class="badge badge-dark">91</span></p>
+                    <p>Promotion : <span class="badge badge-dark">103</span></p>
+                    <p>Niveau : <span class="badge badge-dark">1ere BAC</span></p>
+                    <p>Année scolaire : <span class="badge badge-dark">2023/2024</span></p>
+                   </div>
+                
+                   <div class="d-flex align-items-end">
+                    <button type="button" class="mx-2 buttons" data-toggle="modal" data-target="#studentModal">
+                        <i class="fas fa-plus"></i> Créer
+                    </button>
+                </div>
+                
+                   <!-- Modal -->
+
+
+<script>
+$(document).ready(function() {
+  $('#saveChangesBtn').on('click', function() {
+      // Retrieve the new values from the input fields
+      var newNombreEleves = $('#nombreEleves').val();
+      var newPromotion = $('#promotion').val();
+      var newNiveau = $('#niveau').val();
+      var newAnneeScolaire = $('#anneeScolaire').val();
+
+      // Send an AJAX request to the server with the updated values
+      $.ajax({
+          url: 'php/save_changes.php',
+          type: 'POST',
+          dataType: 'json',
+          data: {
+              nombreEleves: newNombreEleves,
+              promotion: newPromotion,
+              niveau: newNiveau,
+              anneeScolaire: newAnneeScolaire
+          },
+          success: function(response) {
+              // Update the displayed values if the changes are successfully saved
+              $('#elevesNombre').text(newNombreEleves);
+              // Update other displayed values as needed
+              // Close the modal
+              $('#promotionModal').modal('hide');
+          },
+          error: function(xhr, status, error) {
+              // Handle errors
+              console.error('Error saving changes:', error);
+          }
+      });
+  });
+});
+</script>
+
+      
+                
+                   <!-- Modal -->
+<div class="modal fade" id="studentModal" tabindex="-1" role="dialog" aria-labelledby="studentModalLabel">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl modal-fullscreen" role="document"> <!-- Ajout de la classe "modal-xxxl" pour un modal très large -->
+      <div class="modal-content rounded-4">
+        <div class="modal-header">
+          <h5 class="modal-title" id="studentModalLabel">Fiche de l'élève</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Contenu de la fiche de l'élève -->
+          <form method="POST" action="save_student.php" enctype="multipart/form-data">
+            <fieldset>
+              <legend>Informations personnelles</legend>
+              <div class="row mb-3">
+                <div class="col-md-4">
+                  <label for="studentPhoto">Photo de l'élève</label>
+                  <input type="file" id="studentPhoto" class="form-control-file">
+                  <img id="studentPreview" src="#" alt="Aperçu de la photo de l'élève" class="mt-2" style="max-width: 100%;">
+                </div>
+                <div class="col-md-8">
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="studentName">Nom et prénom</label>
+                      <input type="text" class="form-control" id="studentName">
+                    </div>
+                    <div class="col-md-6">
+                      <label for="massarCode">Code Massar</label>
+                      <input type="text" class="form-control" name="massar_code" id="massarCode">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="studentBirthDate">Date de naissance</label>
+                      <input type="date" class="form-control" id="studentBirthDate">
+                    </div>
+                    <div class="col-md-6">
+                      <label for="studentBirthPlace">Lieu de naissance</label>
+                      <input type="text" class="form-control" id="studentBirthPlace">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="fatherName">Nom du père</label>
+                      <input type="text" class="form-control" id="fatherName">
+                    </div>
+                    <div class="col-md-6">
+                      <label for="fatherProfession">Profession du père</label>
+                      <input type="text" class="form-control" id="fatherProfession">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="motherName">Nom de la mère</label>
+                      <input type="text" class="form-control" id="motherName">
+                    </div>
+                    <div class="col-md-6">
+                      <label for="motherProfession">Profession de la mère</label>
+                      <input type="text" class="form-control" id="motherProfession">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="motherPhone">Tel du pere</label>
+                      <input type="text" class="form-control" id="motherPhone">
+                    </div>
+                    <div class="col-md-6">
+                      <label for="fatherPhone">Tel de la mere </label>
+                      <input type="text" class="form-control" id="fatherPhone">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+  
+            <fieldset>
+              <legend>Carte d'identité</legend>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="identityCardNumber">Numéro de carte d'identité</label>
+                  <input type="text" class="form-control" id="identityCardNumber">
+                </div>
+                <div class="col-md-6">
+                  <label for="identityCardExpiry">Valable jusqu'à</label>
+                  <input type="date" class="form-control" id="identityCardExpiry">
+                </div>
+              </div>
+              <!-- Ajouter les champs pour les autres documents d'identité ici -->
+            </fieldset>
+  
+            <fieldset>
+              <legend>Informations et scolarites</legend>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="schoolOrigin">Lycée d'origine</label>
+                  <input type="text" class="form-control" id="schoolOrigin">
+                </div>
+                <div class="col-md-6">
+                  <label for="schoolAddress">Ville du lycée d'origine</label>
+                  <input type="text" class="form-control" id="schoolAddress">
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="emergencyContact">TEL à prévenir en cas d'accident</label>
+                  <input type="text" class="form-control" id="emergencyContact">
+                </div>
+                <div class="col-md-6">
+                  <label for="personalPhone">Téléphone personnel</label>
+                  <input type="tel" class="form-control" id="personalPhone">
+                </div>
+              </div>
+<fieldset>
+    <legend>Documents personnelles</legend>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label for="lyceeCardNumber">Numéro de carte de lycée</label>
+            <input type="text" class="form-control" id="lyceeCardNumber">
+        </div>
+        <div class="col-md-6">
+            <label for="lyceeCardExpiry">Valable jusqu'à</label>
+            <input type="date" class="form-control" id="lyceeCardExpiry">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label for="passportNumber">Numéro de passeport</label>
+            <input type="text" class="form-control" id="passportNumber">
+        </div>
+        <div class="col-md-6">
+            <label for="passportDate">Délivrée le</label>
+            <input type="date" class="form-control" id="passportDate">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label for="driverLicenseNumber">Numéro de permis de conduire</label>
+            <input type="text" class="form-control" id="driverLicenseNumber">
+        </div>
+        <div class="col-md-6">
+            <label for="driverLicenseDate">Délivrée le</label>
+            <input type="date" class="form-control" id="driverLicenseDate">
+        </div>
+    </div>
+    <!-- Ajoutez d'autres champs de documents d'identité ici -->
+</fieldset>
+
+<fieldset>
+    <legend>Liste des frères et sœurs</legend>
+   <div class="d-flex justify-content-between py-3">
+    <div class="col-md-6">
+        <label for="brothersNumber">Nombre des Freres</label>
+        <input type="number" class="form-control" id="brothersNumber">
+    </div>
+    <div class="col-md-6">
+        <label for="sistersNumber">Nombre des soeurs</label>
+        <input type="number" class="form-control" id="sistersNumber">
+    </div>
+   </div>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Profession</th>
+                <th>Adresse</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Ajoutez les lignes pour chaque frère ou sœur -->
+        </tbody>
+    </table>
+</fieldset>
+
+<fieldset>
+    <legend>Liste des proches militaires</legend>
+    <div class="col-md-6 my-4">
+    <label for="prchesNumber">Nombre des proches militaires</label>
+        <input type="number" class="form-control" id="prchesNumber">
+      </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom et Prénom</th>
+                <th>Lien</th>
+                <th>Unité</th>
+                <th>Grade</th>
+                <th>Adresse</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Ajoutez les lignes pour chaque proche militaire -->
+        </tbody>
+    </table>
+</fieldset>
+
+<fieldset>
+    <legend>Concours</legend>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label for="entryDate">Date d'entrée au lycée ARM</label>
+            <input type="date" class="form-control" id="entryDate">
+        </div>
+        <div class="col-md-6">
+            <label for="examDate">Date du concours</label>
+            <input type="date" class="form-control" id="examDate">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <label for="examMethod">Moyen de concours</label>
+            <input type="number" class="form-control" id="examMethod" rows="3">
+        </div>
+    </div>
+    <!-- Ajoutez d'autres champs d'informations ici -->
+</fieldset>            </fieldset>
+<fieldset>
+  <legend>Branche et classe</legend>
+  <div class="row mb-3">
+      <div class="col-md-6">
+          <label for="option">Option</label>
+          <select class="form-control" id="option">
+              <option value="math">Science Math</option>
+              <option value="exp">Science Expérimentale</option>
+          </select>
+      </div>
+      <div class="col-md-6">
+          <label for="classe">Classe</label>
+          <select class="form-control" id="classe">
+              <option id="sm" value="1/1">1/1</option>
+              <option id="sm" value="2/1">1/2</option>
+              <option id="sx" value="3/1">1/3</option>
+              <option id="sx" value="4/1">1/4</option>
+              <option id="sx" value="5/1">1/5</option>
+          </select>
+      </div>
+  </div>
+</fieldset>
+          </form>
+        </div>
+        <div class="modal-footer d-flex justify-content-between">
+          <button type="button" class="buttons" id="saveNewStudent">Enregistrer</button>
+          <p>La fermeture de modal avant enregistrer les infos  peut causer des erreurs.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- View Modal -->
+<!-- View Modal -->
+<div class="modal" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewModalLabel">Voir Élève</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="viewStudentForm">
+          <label for="viewStudentName">Nom:</label>
+          <input type="text" id="viewStudentName" readonly><br>
+
+          <label for="viewStudentMassarCode">Massar Code:</label>
+          <input type="text" id="viewStudentMassarCode" readonly><br>
+
+          <label for="viewStudentIdCardNumber">ID Card Number:</label>
+          <input type="text" id="viewStudentIdCardNumber" readonly><br>
+
+          <label for="viewStudentLevel">Level:</label>
+          <input type="text" id="viewStudentLevel" readonly><br>
+
+          <label for="viewStudentClasse">Classe:</label>
+          <input type="text" id="viewStudentClasse" readonly><br>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Modifier Élève</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="editStudentForm">
+          <label for="editStudentName">Nom:</label>
+          <input type="text" id="editStudentName"><br>
+
+          <label for="editStudentMassarCode">Massar Code:</label>
+          <input type="text" id="editStudentMassarCode"><br>
+
+          <label for="editStudentIdCardNumber">ID Card Number:</label>
+          <input type="text" id="editStudentIdCardNumber"><br>
+
+          <label for="editStudentLevel">Level:</label>
+          <input type="text" id="editStudentLevel"><br>
+
+          <label for="editStudentClasse">Classe:</label>
+          <input type="text" id="editStudentClasse"><br>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="saveEditButton">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+            </section>
+            <section style="flex-basis: 35%;">
+              <div class="container" style="width: 100%;">
+                  <!-- Titre "Fiche de l'élève" avec une icône -->
+                  <h2><i class="fas fa-folder-open"></i> Liste des Eleves</h2>
+                  <!-- Boutons radio pour sélectionner le niveau et l'option -->
+                  <div class="justify-content-between align-items-center m-2 mt-4">
+                      <div class="d-flex justify-content-between">
+                        <div style="width: max-content;">
+                          <label for="optionsNiveau"> Option de Niveau</label>
+                            <div class="btn-group btn-group-toggle" name="optionsNiveau" data-toggle="buttons">
+                              <label class="btn buttons">
+                                  <input type="radio" id="1BAC" class="buttons" autocomplete="off">1BAC
+                              </label>
+                              <label class="btn buttons">
+                                  <input type="radio" id="2BAC" class="buttons" autocomplete="off">2BAC
+                              </label>
+                          </div>
+            
+                        </div>
+                        <div class="">
+                          <label for="optionsbranche"> Option de Branche</label>
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <label class="btn buttons">
+                                    <input type="radio" name="optionsOption" id="sMath" class="buttons" autocomplete="off">S.Math
+                                </label>
+                                <label class="btn buttons">
+                                    <input type="radio" name="optionsOption" id="sEx" class="buttons" autocomplete="off">S.Ex/PC
+                                </label>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="my-2">
+                        <label for="optionsbranche"> Option de Classe</label>
+                          <div class="btn-group btn-group-toggle" data-toggle="buttons" id="classePremiereAnnee">
+                              <label class="btn buttons">
+                                  <input type="radio" name="optionsOption" id="pAnne1" class="buttons" autocomplete="off">1/1
+                              </label>
+                              <label class="btn buttons">
+                                  <input type="radio" name="optionsOption" id="pAnne2" class="buttons" autocomplete="off">1/2
+                              </label>
+                              <label class="btn buttons">
+                                <input type="radio" name="optionsOption" id="pAnne3" class="buttons" autocomplete="off">1/3
+                            </label>
+                            <label class="btn buttons">
+                                <input type="radio" name="optionsOption" id="pAnne4" class="buttons" autocomplete="off">1/4
+                            </label>
+                            <label class="btn buttons">
+                              <input type="radio" name="optionsOption" id="pAnne5" class="buttons" autocomplete="off">1/5
+                          </label>
+                          
+                          </div>
+                          <div class="btn-group btn-group-toggle mt-2" data-toggle="buttons" id="classePremiereAnnee">
+                            <label class="btn buttons">
+                                <input type="radio" name="optionsOption" id="pAnne1" class="buttons" autocomplete="off">2/1
+                            </label>
+                            <label class="btn buttons">
+                                <input type="radio" name="optionsOption" id="pAnne2" class="buttons" autocomplete="off">2/2
+                            </label>
+                            <label class="btn buttons">
+                              <input type="radio" name="optionsOption" id="pAnne3" class="buttons" autocomplete="off">2/3
+                          </label>
+                          <label class="btn buttons">
+                              <input type="radio" name="optionsOption" id="pAnne4" class="buttons" autocomplete="off">2/4
+                          </label>
+                          
+                        
+                        </div>
+                          <button type="button" class="buttons mt-3"><i class="fas fa-file"></i> Afficher</button>
+                      </div>
+                      
+                  </div>
+              </div>
+          </section>
+               </div>
+               <div class="containers w-100">         
+            <section class="mx-3 p-4" style="flex-basis: 100%; flex: 1;">
+              <div>
+                  <!-- Titre "Fiche de l'élève" avec une icône -->
+                  <h2><i class="fas fa-search"></i> Recherche d'élève</h2>
+                  <!-- Champ de recherche -->
+                  <div class="input-group p-5">
+                      <input type="text" class="form-control" style="border-radius: 20px;" id="searchInput" placeholder="Rechercher par nom">
+                      <div class="input-group-append">
+                          <button class="btn buttons" style="border-radius: 100px;" type="button"><i class="fas fa-search"></i></button>
+                      </div>
+                  </div>
+                  
+                  
+                  
+              </div>
+              <table id="StudentsTable">
+                <th>Nom et Prénom</th>
+                <th>Code Massar</th>
+                <th>C.I.N</th>
+                <th>Niveau</th>
+                <th>Classe</th>
+                <th>Action</th>
+                <tbody>
+                </tbody>
+              </table>
+          </section>
+        </div> 
+        </main>
+</body>
+<script src="js.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+<script src="student-manager.js"></script>
+
+</html>

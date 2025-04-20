@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Académie Royale Militaire</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="js.js"></script>
+    <link rel="shortcut icon" href="logolycee.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <header class="header p-3 d-flex px-5 sticky-top ">
+      <div data-toggle="collapse" data-target="#sidebar">
+          <div id="menuList">
+              <i class="fas fa-bars"></i>
+          </div>
+          
+                  </div>
+      <h1><img src="logolycee.ico" width="50"></h1>
+      <div class="header-icon">
+          <i class="fas fa-user"></i>
+          <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                fetch("get_user_data.php")
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            alert("Utilisateur non connecté");
+                            window.location.href = "index.html";
+                        } else {
+                            document.getElementById("loggedUsername").textContent = data.username;
+                            document.getElementById("loggedPassword").textContent = data.password;
+                            document.getElementById("loggedGrade").textContent = data.grade;
+                            document.getElementById("loggedFunction").textContent = data.fonction;
+                        }
+                    })
+                    .catch(error => console.error("Erreur :", error));
+            });
+        </script>
+        <div class="header-popup">
+            <h3>Login Information</h3>
+            <p>Utilisateur: <b id="loggedUsername"></b></p>
+            <p>Password: <b id="loggedPassword"></b></p>
+            <p>Grade: <b id="loggedGrade"></b></p>
+            <p>Fonction: <b id="loggedFunction"></b></p>
+            <a href="logout.php">Logout</a>
+        </div>
+      </div>
+  </header>
+  <div class="mainAndAside bg-light">
+      <aside id="sidebar" class="collapse show">
+            <nav>
+                <ul>
+                    <li><a href="Home.html"><i class="fas fa-home"></i>Accueil</a></li>
+                    <li><a href="Etudiants.html"><i class="fas fa-user-graduate"></i>Étudiants</a></li>
+                    <li><a href="Promotions.html"><i class="fas fa-layer-group"></i>Promotion</a></li>
+                    <li><a href="infermerie.html"><i class="fas fa-notes-medical"></i>Infermerie</a></li>
+                    <li><a href="Permissions.html" class="active"><i class="fas fa-calendar"></i>Permissions</a></li>
+                    <li><a href="Permanence.html"><i class="fas fa-moon"></i>Permanence</a></li>
+
+                    <!-- Add more categories as needed -->
+                </ul>
+            </nav>
+        </aside>
+        <main>
+          <section class="container d-block p-3" style="width: 95%;">
+          <fieldset>
+            <legend>Sanctions</legend>
+            <div class="mb-3 d-flex justify-content-between">
+              <button class="buttons" style="width: 40%;" data-toggle="modal" data-target="#pBacModal">1 Bac</button>
+              <button class="buttons" style="width: 40%;" data-toggle="modal" data-target="#dBacModal">2 Bac</button>
+            </div>
+          </fieldset>
+          </section>
+            <section class="container d-block p-3" style="width: 95%;">
+                <h2><legend>Permissions</legend></h2>
+                <div class="d-flex justify-content-around my-4">
+                  <div class="flexPermissionInputs">
+                      <label for="permissionBeggining">Date De permission
+                      </label>
+                      <input type="date" name="permissionBeggining" id="permissionBeggining">
+                  </div>
+                  <div class="flexPermissionInputs">
+                      <label for="permissionFin">Fin De permisson
+                      </label>
+                      <input type="date" name="permissionFin" id="permissionFin">
+                  </div>
+                 </div>
+              
+               <div class="d-flex justify-content-between p-5">
+               <fieldset class="my-4  mx-2">
+                <legend>1BAC</legend>
+                <div>
+                    <label for="TotalEleves1BAC">Nombre Total Des Eleves 1BAC
+                    </label>
+                    <input type="number" value="91" class="text-center w-100" disabled name="TotalEleves1BAC" id="TotalEleves1BAC">
+                </div>  
+                <div class="d-flex justify-content-around my-3">
+                    <div class="flexPermissionInputs">
+                        <label for="mangeant1BAC">Les Mangeants
+                        </label>
+                        <input type="number" name="mangeant1BAC" id="mangeant1BAC">
+                    </div>
+                    <div class="flexPermissionInputs">
+                        <label for="minibus1BAC">Mini Bus
+                        </label>
+                        <input type="number" name="minibus1BAC" id="minibus1BAC">
+                    </div>
+                   
+                   </div> 
+                   <div>
+                    <label for="sanctions1Bac">Sanctions
+                    </label>
+                    <input type="number" disabled class="text-center w-100" name="sanctions1Bac" id="sanctions1Bac ">
+                </div> 
+                  
+               </fieldset>  
+               <fieldset class="my-4 mx-2">
+                <legend>2BAC</legend>
+                <div>
+                    <label for="TotalEleves2BAC">Nombre Total Des Eleves 2BAC
+                    </label>
+                    <input type="number" value="88" class="text-center w-100" disabled name="TotalEleves1BAC" id="TotalEleves1BAC">
+                </div>  
+                <div class="d-flex justify-content-around my-3">
+                    <div class="flexPermissionInputs">
+                        <label for="mangeant2BAC">Les Mangeants
+                        </label>
+                        <input type="number" name="mangeant2BAC" id="mangeant2BAC">
+                    </div>
+                    <div class="flexPermissionInputs">
+                        <label for="minibus2BAC">Mini Bus
+                        </label>
+                        <input type="number" name="minibus2BAC" id="minibus2BAC">
+                    </div>
+                   </div> 
+                   <div>
+                    <label for="sanctions2Bac">Sanctions
+                    </label>
+                    <input type="number" disabled class="text-center w-100" name="sanctions2Bac" id="sanctions2Bac ">
+                </div> 
+               </fieldset>
+            </div>
+            
+            <!-- Modal for 1 Bac -->
+            <div class="modal fade" id="pBacModal" tabindex="-1" role="dialog" aria-labelledby="1bacModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="1bacModalLabel">Sanctions: 1 annee Bac</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                      <div class="form-group d-flex justify-content-between">
+                       <div class="w-75">
+                        <label for="1bacNom"><strong>Nom</strong></label>
+                        <input type="text" class="form-control" id="1bacsanctionneNom">
+                       </div class="w-75">
+                        <div>
+                          <label for="1bacClasse"><strong>Classe</strong></label>
+                        <select class="form-control w-100" id="1bacClasse">
+                          <option>1/1</option>
+                          <option>1/2</option>
+                          <option>1/3</option>
+                          <option>1/4</option>
+                          <option>1/5</option>
+
+                        </select>
+                        </div>
+                      </div>
+                     
+              
+                      <div class="form-group">
+                        <label><strong>Type de sanction</strong></label>
+                        <div class="d-flex align-items-center justify-content-center">
+                          <div class="form-check radio-button">
+                            <input class="form-check-input " type="radio" name="1bacSanctionType" id="1bacRetard" value="retard">
+                            <label class="form-check-label" for="1bacRetard">
+                              Retard
+                            </label>
+                          </div>
+                          <div class="form-check radio-button">
+                            <input class="form-check-input " type="radio" name="1bacSanctionType" id="1bacConsigne" value="consigne">
+                            <label class="form-check-label" for="1bacConsigne">
+                              Consigne
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="1bacMotif"><strong>Motif</strong></label>
+                        <input type="text" class="form-control" id="1bacMotif">
+                      </div>
+                      <button type="submit" class="buttons" style="width: 50%; padding-block: 7px;">Submit</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Modal for 2 Bac -->
+            <div class="modal fade" id="dBacModal" tabindex="-1" role="dialog" aria-labelledby="2bacModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="2bacModalLabel">2 Bac Sanctions</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                      <div class="form-group">
+                        <label for="2bacNom">Nom</label>
+                        <input type="text" class="form-control" id="2bacNom">
+                      </div>
+                      <div class="form-group">
+                        <label for="2bacClasse">Classe</label>
+                        <select class="form-control" id="2bacClasse">
+                          <option>Option 1</option>
+                          <option>Option 2</option>
+                          <option>Option 3</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label>Type de sanction</label>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="2bacSanctionType" id="2bacRetard" value="retard">
+                          <label class="form-check-label" for="2bacRetard">
+                            Retard
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="2bacSanctionType" id="2bacConsigne" value="consigne">
+                          <label class="form-check-label" for="2bacConsigne">
+                            Consigne
+                          </label>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="2bacMotif">Motif</label>
+                        <input type="text" class="form-control" id="2bacMotif">
+                      </div>
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Nom</th>
+                          <th scope="col">Classe</th>
+                          <th scope="col">Type de sanction</th>
+                          <th scope="col">Motif</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- Data will be dynamically added here -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="buttons">Imprimer</button> 
+
+            </section>
+        </main>
+</body>
+<script src="script/js.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+
+</html>
